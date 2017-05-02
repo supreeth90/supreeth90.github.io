@@ -8,13 +8,16 @@ Our first task is to improve upon the load balancing capabilities of Apache Aira
 
 There are two main areas of concentration here:
 
-1. Software Defined Environment: This part addresses the infrastructural needs for deploying the API-Gateway, or in general defines the next generation environment by adopting DevOps, we tried two different approaches for this. Critcism: Aws centric infrastructure: We setup the whole environment using AWS console, though it served our purpose of fault tolerance, managing this infrastructure was not easy and also this solution was of no value when multiple cloud vendors were in picture. The last solution was criticized for being heavily dependent on AWS, hence this time around, we have introduced Terraform (https://www.terraform.io/), a cloud agnostic tool to manage infrastructure for multiple cloud vendors, basically, this solution adds a abstraction layer on top of cloud specific technologies and provides a unified platform to create, change, evolve and destroy infrastructure with ease.
+1. Software Defined Environment: This part addresses the infrastructural needs for deploying the API-Gateway, or in general defines the next generation environment by adopting DevOps, we tried two different approaches for this. 
+Possible options for Software Defined Environment:
+- Platform dependent Aws centric infrastructure: We setup the whole environment using AWS console, though it served our purpose of fault tolerance, managing this infrastructure was not easy and also this solution was of no value when multiple cloud vendors were in picture.
+- Platform independent Infrastructure: We introduced Terraform (https://www.terraform.io/), a cloud agnostic tool to manage infrastructure for multiple cloud vendors, basically, this solution adds a abstraction layer on top of cloud specific technologies and provides a unified platform to create, change, evolve and destroy infrastructure with ease.
 
 2. Load-Balancing: Our main concern when researching about this topic was to introduce dynamic and automated nature to load-balancing architecture, or to rephrase it, we were more concerned about service discovery and automated configuration of load balancer service. Hence below mentioned are the possible solutions,
 
 Possible options for Load balancing: 
-1. Consul for service discovery and Fabio for load balancing, this Blog explains in brief about this solution.
-2. Consul for service discovery and consul template plus HAProxy for load balancing.
+- Consul for service discovery and Fabio for load balancing, this Blog explains in brief about this solution.
+- Consul for service discovery and consul template plus HAProxy for load balancing.
 
 ### Evaluation of solution:
 
