@@ -15,9 +15,15 @@ There are two main areas of concentration here:
 
 2. Load-Balancing: Our main concern when researching about this topic was to introduce dynamic and automated nature to load-balancing architecture, or to rephrase it, we were more concerned about service discovery and automated configuration of load balancer service. Hence below mentioned are the possible solutions,
   Possible options for Load balancing: 
-  - Consul for service discovery and Fabio for load balancing, this Blog explains in brief about this solution.
+  - Consul for service discovery and Fabio for load balancing.
   - Consul for service discovery and consul template plus HAProxy for load balancing.
 
 ### Evaluation of solution:
+  As we are trying to load balance API server here, which runs on Apache Thrift(TCP-based). After our hand-on experience with both of the solutions, we feel that Consul+Consul Template and HA Proxy is a better solution as HA Proxy has better support for TCP load balancing. We observed that fabio has a good support for HTTP load balancing but lacks in TCP load balancing.
+  
+### More explaination of the Solution:
+1. Service Discovery by Consul: This is a service discovery engine running on each node, automatically registers to the network forming a mesh network. We embedded java code which registered load balancers as a service in consul when we started the thrift service.
+2. HA Proxy: HAProxy is a free, very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications.
+3. Consul Template: The daemon consul-template queries a Consul cluster and updates any number of specified templates on the file system. We used this feature to update HA proxy.cfg for available API servers.
 
 
