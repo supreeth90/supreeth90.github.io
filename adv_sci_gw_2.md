@@ -27,5 +27,5 @@ There are two main areas of concentration here:
 3. Consul Template: The daemon consul-template queries a Consul cluster and updates any number of specified templates on the file system. We used this feature to update HA proxy.cfg for available API servers.
 
 ### Testing:
-  We implemented a load testing mechanism using Apache Jmeter: Apache Jmeter doesn't support load testing using TProtocol but provides an option to write an extension called a Sampler. We implemented a Apache Jmeter Sampler to help us with load testing the API server. (link)[https://github.com/airavata-courses/spring17-API-Server/tree/master/mock-airavata-api-load-tester]
+  We implemented a load testing mechanism using Apache Jmeter: Apache Jmeter doesn't support load testing using TProtocol but provides an option to write an extension called a Sampler. We implemented a Apache Jmeter Sampler to help us with load testing the API server. [link](https://github.com/airavata-courses/spring17-API-Server/tree/master/mock-airavata-api-load-tester)
 
