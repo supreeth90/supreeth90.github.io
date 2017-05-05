@@ -1,6 +1,6 @@
 # Advanced Science Gateway Architectures: Final Report
 
-## Problem Statement
+## Problem Statements
 1. API server Load-balancing and High Availability: To improve the load balancing capabilities of Apache Airavata, API gateway is a part of Airavata’s middleware service, 
 providing the essential abstraction and security needed to several micro-services deployed as CPI. API gateway is deployed on a single instance in production, 
 hence is the single point of failure for the whole middleware service, therefore this repository will serve as the test bench for trying out all the load balancing and infrastructural technologies and to decide upon
@@ -8,7 +8,7 @@ a feasible solution for Airavata.
 2. Microservices data management: Microservice Data management is a complicated problem in its own. Each Microservice will have a Database, which has Data that it owns and shared data. 
 The problem here is about maintaining consistency of the data.
 
-## Problem: API server Load-balancing and High Availability:
+## Problem 1: API server Load-balancing and High Availability:
 ### Possible solutions for API server Load-balancing and High Availability:
   1. Consul for service discovery and Fabio for load balancing.
   2. Consul for service discovery and consul template plus HAProxy for load balancing.
@@ -23,7 +23,7 @@ Service Discovery by Consul: This is a service discovery engine running on each 
 HA Proxy: HAProxy is a free, very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications.
 Consul Template: The daemon consul-template queries a Consul cluster and updates any number of specified templates on the file system. We used this feature to update HA proxy.cfg for available API servers.
 
-## Problem: Microservices data management:
+## Problem 2: Microservices data management:
 ### Possible solutions for Microservices data management:
 1. Event Driven Approach: Provides Availability and Eventual Consistency.[Event-driven](https://en.wikipedia.org/wiki/Event-driven_architecture)
 2. Two phase commit protocol: Provides absolute Consistency.[2PC](https://en.wikipedia.org/wiki/Two-phase_commit_protocol)
