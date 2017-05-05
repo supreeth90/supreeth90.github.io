@@ -8,7 +8,7 @@ a feasible solution for Airavata.
 2. Microservices data management: Microservice Data management is a complicated problem in its own. Each Microservice will have a Database, which has Data that it owns and shared data. 
 The problem here is about maintaining consistency of the data.
 
-## API server Load-balancing and High Availability:
+## Problem: API server Load-balancing and High Availability:
 ### Possible solutions for API server Load-balancing and High Availability:
   1. Consul for service discovery and Fabio for load balancing.
   2. Consul for service discovery and consul template plus HAProxy for load balancing.
@@ -23,15 +23,16 @@ Service Discovery by Consul: This is a service discovery engine running on each 
 HA Proxy: HAProxy is a free, very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications.
 Consul Template: The daemon consul-template queries a Consul cluster and updates any number of specified templates on the file system. We used this feature to update HA proxy.cfg for available API servers.
 
-## Microservices data management:
+## Problem: Microservices data management:
 ### Possible solutions for Microservices data management:
 1. Event Driven Approach: Provides Availability and Eventual Consistency.[Event-driven](https://en.wikipedia.org/wiki/Event-driven_architecture)
 2. Two phase commit protocol: Provides absolute Consistency.[2PC](https://en.wikipedia.org/wiki/Two-phase_commit_protocol)
+
 ### Phases in 2PC:
 1. Prepare Phase: The initiating node, called the global coordinator, asks participating nodes other than the commit point site to promise to commit or roll back the transaction, even if there is a failure. If any node cannot prepare, the transaction is rolled back.
 2. Commit Phase: If all participants respond to the coordinator that they are prepared, then the coordinator asks the commit point site to commit. After it commits, the coordinator asks all other nodes to commit the transaction.
   
-### Implementations:
+### Approaches:
 1. Using Distributed XA Transactions with Global Transaction Manager: We implemented a sample application to demonstrate 2PC protocol for Distributed Transactions, which was built on Spring Framework with JPA + JTA + Bitronix(Open source DTM). The schema had a Student Table with 2 datasources and we saw the consistency across both the datasources.
 2. Synchronous approach without Global Transaction Manager: To address some of the issues found in Solution 1.0, we implemented an architecture which doesn't have GTM instead it relies on lot of Master-slave communications which can provides much more flexibilty. There will be Master Service for each schema, which owns the schema, and it is the responsibility of this service to maintain consistency of data across all the microservices which uses this schema. Essentially, the master service is per schema basis and there can be many master microservices.  
   
