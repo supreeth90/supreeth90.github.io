@@ -1,5 +1,6 @@
 # Advanced Science Gateway Architectures
 
+## [Final Report](adv_sci_gw_final.md)
 
 ## Assignments
 1. [Assignment 1](adv_sci_gw_1.md)
