@@ -27,14 +27,16 @@ Consul Template: The daemon consul-template queries a Consul cluster and updates
 ### Possible solutions for Microservices data management:
 1. Event Driven Approach: Provides Availability and Eventual Consistency.[Event-driven](https://en.wikipedia.org/wiki/Event-driven_architecture)
 2. Two phase commit protocol: Provides absolute Consistency.[2PC](https://en.wikipedia.org/wiki/Two-phase_commit_protocol)
-
-### Evaluation of approches for Microservices data management: 
-As part of this, me and Thanmai explored more into the 2 phase commit protocol for possible approaches to incorporate that to solve data management issue.
 ### Phases in 2PC:
   1. Prepare Phase: The initiating node, called the global coordinator, asks participating nodes other than the commit point site to promise to commit or roll back the transaction, even if there is a failure. If any node cannot prepare, the transaction is rolled back.
   2. Commit Phase: If all participants respond to the coordinator that they are prepared, then the coordinator asks the commit point site to commit. After it commits, the coordinator asks all other nodes to commit the transaction.
   
 ### Implementations:
 1. Using Distributed XA Transactions with Global Transaction Manager: We implemented a sample application to demonstrate 2PC protocol for Distributed Transactions, which was built on Spring Framework with JPA + JTA + Bitronix(Open source DTM). The schema had a Student Table with 2 datasources and we saw the consistency across both the datasources.
-2. Synchronous approach without Global Transaction Manager: To address some of the issues found in Solution 1.0, we implemented an architecture which doesn't have GTM instead it relies on lot of Master-slave communications which can provides much more flexibilty. 
-  There will be Master Service for each schema, which owns the schema, and it is the responsibility of this service to maintain consistency of data across all the microservices which uses this schema. Essentially, the master service is per schema basis and there can be many master microservices.  
+2. Synchronous approach without Global Transaction Manager: To address some of the issues found in Solution 1.0, we implemented an architecture which doesn't have GTM instead it relies on lot of Master-slave communications which can provides much more flexibilty. There will be Master Service for each schema, which owns the schema, and it is the responsibility of this service to maintain consistency of data across all the microservices which uses this schema. Essentially, the master service is per schema basis and there can be many master microservices.  
+  
+### Evaluation of approches for Microservices data management: 
+Implementation 1, though it maintains consistency, has some serious disadvantages such as Global Transaction Manager(GTM) should be access the Database of all the microservices which is a serious violation of microservices architecture.ALso, GTM can be a single point of failure.And, if there is a schema change in any microservice, the GTM needs to be updated and restarted. In order to improvise on some of these drawbacks of this Implementation, Implementation 2 was tried out. During initial testing with 2 microservices(Customer and Order service), the results were promising with consitency being maintained and the advantage of master service doesn't need to have direct access to other databases is good. 
+
+### Conclusions and recommendations for Microservices data management:
+As stated by CAP theorem, both the approaches, Event-driven and two phase commit guarantees either Availability or Consistency. So, if an application is mission critical and cannot compromise on the consistency, then the obvious choice is to go with distributed transactions with two phase commit. Also, Bitronix or Atomikos is a better choice as they are production ready and have good support though they have serious limitations for microservices and schema changes. But, for applications with good availability needs, event-driven approach is more suitable as it provides eventual consistency without compromise on availability.
